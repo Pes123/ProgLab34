@@ -19,18 +19,9 @@ public abstract class Door extends InteractableThings  {
 
     @Override
     public String toString() {
-        return "хз";
+        return "Door{" +
+                "isOpened=" + isOpened +
+                "} " + super.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Door door)) return false;
-        return isOpened == door.isOpened;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(isOpened);
-    }
 }

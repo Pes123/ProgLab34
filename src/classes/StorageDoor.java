@@ -7,6 +7,8 @@ import enums.Material;
 import interfaces.Clickable;
 import interfaces.Openable;
 
+import java.util.Objects;
+
 
 public class StorageDoor extends Door implements Openable {
 
@@ -33,7 +35,7 @@ public class StorageDoor extends Door implements Openable {
         }
         else {
             System.out.println("Нажмите кнопку для открытия двери");
-        }
+        }       
     }
 
     private class Button implements Clickable {
@@ -42,14 +44,30 @@ public class StorageDoor extends Door implements Openable {
         public Button(Material material){
             this.material = material;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Button button)) return false;
+            return material == button.material;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(material);
+        }
+
         @Override
         public void click() {
             System.out.println("нажал кнопку");
             isClicked = true;
         }
     }
+
     @Override
-    public String toString(){
-        return "Дверь хранилища";
+    public String toString() {
+        return "StorageDoor{" +
+                "button=" + button +
+                "} " + super.toString();
     }
 }

@@ -15,16 +15,11 @@ public class Keys{
     }
 
     @Override
-    public String toString(){
-        return "Ключ";
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public int getId() {
-        return id;
+    public String toString() {
+        return "Keys{" +
+                "material=" + material +
+                ", id=" + id +
+                '}';
     }
 
     @Override
@@ -38,4 +33,13 @@ public class Keys{
     public int hashCode() {
         return Objects.hash(material, id);
     }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }

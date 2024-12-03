@@ -5,6 +5,7 @@ import enums.Distance;
 import enums.Lighten;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Place {
     private String name;
@@ -26,6 +27,18 @@ public abstract class Place {
         personHere.add(person);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Place place)) return false;
+        return Objects.equals(name, place.name) && distance == place.distance && lighten == place.lighten;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, distance, lighten);
+    }
+
     public void removePersonHere(Person person) {
         personHere.remove(person);
     }
@@ -41,6 +54,16 @@ public abstract class Place {
 
     public Distance getDistance() {
         return distance;
+    }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "name='" + name + '\'' +
+                ", personHere=" + personHere +
+                ", distance=" + distance +
+                ", lighten=" + lighten +
+                '}';
     }
 
     public Lighten getLighten() {

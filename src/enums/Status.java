@@ -1,7 +1,7 @@
 package enums;
 
 public enum Status {
-    SITTING("Сидит"),
+    SITTING("Сидит в машине"),
     STANDING("Стоит");
 
     private String type;

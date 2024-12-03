@@ -15,12 +15,11 @@ public class CarDoor extends Door implements Openable {
     @Override
     public void open(Lighten lighten) {
         isOpened = true;
+        System.out.println("Дверь машины отварилась можно заваливаться");
     }
 
     @Override
-    public String toString(){
-        return "Дверь Машины";
+    public String toString() {
+        return "CarDoor{} " + super.toString();
     }
-
-
 }

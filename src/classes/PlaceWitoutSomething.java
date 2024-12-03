@@ -13,21 +13,4 @@ public class PlaceWitoutSomething extends Place {
         super(name, lighten, distance);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof PlaceWitoutSomething)) return false;
-        PlaceWitoutSomething other = (PlaceWitoutSomething) obj;
-        return this.getName().equals(other.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName());
-    }
-
-    @Override
-    public String toString() {
-        return "PlaceWitoutSomething{name='" + getName() + "'}";
-    }
 }
