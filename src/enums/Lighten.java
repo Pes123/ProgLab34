@@ -1,5 +1,7 @@
 package enums;
 
+import java.util.Random;
+
 public enum Lighten {
     BRIGHT("Светло"),
     SEMIDARK("Потемки"),
@@ -12,5 +14,12 @@ public enum Lighten {
 
     public String getType(){
         return this.type;
+    }
+
+    private static final Random rand = new Random();
+
+        public static Lighten getRandomLighten()  {
+        Lighten[] directions = values();
+        return directions[rand.nextInt(directions.length)];
     }
 }

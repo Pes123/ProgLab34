@@ -20,6 +20,6 @@ public class CarDoor extends Door implements Openable {
 
     @Override
     public String toString() {
-        return "CarDoor{} " + super.toString();
+        return "CarDoor{}";
     }
 }

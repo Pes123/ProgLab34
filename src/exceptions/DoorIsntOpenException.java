@@ -1,7 +1,7 @@
 package exceptions;
 
 public class DoorIsntOpenException extends RuntimeException {
-    public DoorIsntOpenException(String message) {
-        super(message);
+    public DoorIsntOpenException() {
+        super("Дверь закрыта блинб");
     }
 }

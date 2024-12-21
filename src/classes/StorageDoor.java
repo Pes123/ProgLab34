@@ -15,7 +15,7 @@ public class StorageDoor extends Door implements Openable {
     public StorageDoor(Material material, Place place) {
         super(material, place);
     }
-    Button button = new Button(Material .STEEL);
+    private Button button = new Button(Material .STEEL);
 
     @Override
     public void open(Lighten lighten) {
@@ -59,7 +59,6 @@ public class StorageDoor extends Door implements Openable {
 
         @Override
         public void click() {
-            System.out.println("нажал кнопку");
             isClicked = true;
         }
     }
@@ -68,6 +67,7 @@ public class StorageDoor extends Door implements Openable {
     public String toString() {
         return "StorageDoor{" +
                 "button=" + button +
-                "} " + super.toString();
+                '}';
     }
+
 }

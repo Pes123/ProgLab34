@@ -6,14 +6,29 @@ import enums.Distance;
 import enums.Lighten;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class PlaceWithSomething extends Place {
 
-    private ArrayList<InteractableThings> thingsHere = new ArrayList<>();
+    private ArrayList<InteractableThings> thingsHere = new ArrayList<InteractableThings>();
 
 
+    public PlaceWithSomething(String name, Lighten lighten, Distance distance, Place previousPlace) {
+        super(name, lighten, distance, previousPlace);
+    }
+
+
+    public void addThingsHere(InteractableThings thing) {
+        thingsHere.add(thing);
+    }
+
+    @Override
+    public String toString() {
+        return "PlaceWithSomething{" +
+                "thingsHere=" + thingsHere +
+                ", lighten=" + getLighten() +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -26,22 +41,6 @@ public class PlaceWithSomething extends Place {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), thingsHere);
-    }
-
-    public PlaceWithSomething(String name, Lighten lighten, Distance distance, InteractableThings[] things) {
-        super(name, lighten, distance);
-        Collections.addAll(thingsHere, things);
-    }
-
-    @Override
-    public String toString() {
-        return "PlaceWithSomething{" +
-                "thingsHere=" + thingsHere +
-                "} " + super.toString();
-    }
-
-    public void addThingsHere(InteractableThings thing) {
-        thingsHere.add(thing);
     }
 
     public ArrayList<InteractableThings> getThingsHere() {

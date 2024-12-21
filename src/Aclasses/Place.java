@@ -12,11 +12,13 @@ public abstract class Place {
     private ArrayList<Person> personHere = new ArrayList<Person>();
     private Distance distance;
     private Lighten lighten;
+    private Place previousPlace;
 
-    public Place(String name, Lighten lighten, Distance distance){
+    public Place(String name, Lighten lighten, Distance distance, Place previousPlace){
         this.name = name;
         this.lighten = lighten;
         this.distance = distance;
+        this.previousPlace = previousPlace;
     }
 
     public String getName() {
@@ -48,9 +50,7 @@ public abstract class Place {
         return personHere;
     }
 
-    public void setPersonHere(ArrayList<Person> personHere) {
-        this.personHere = personHere;
-    }
+
 
     public Distance getDistance() {
         return distance;
@@ -69,4 +69,14 @@ public abstract class Place {
     public Lighten getLighten() {
         return lighten;
     }
+
+    public void test() {
+    }
+
+
+    public Place getPreviousPlace() {
+        return previousPlace;
+    }
+
+
 }

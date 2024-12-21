@@ -21,7 +21,7 @@ public abstract class Door extends InteractableThings  {
     public String toString() {
         return "Door{" +
                 "isOpened=" + isOpened +
-                "} " + super.toString();
+                '}';
     }
 
 }

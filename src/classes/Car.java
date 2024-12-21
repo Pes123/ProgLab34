@@ -9,20 +9,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Car extends InteractableThings {
-    private Place place;
-    private CarDoor carDoor = new CarDoor(Material.STEEL, this.place);
+
     private ArrayList<Person> whoIsSitingHere = new ArrayList<Person>();
 
     public Car(Material material, Place place) {
         super(material, place);
     }
+    private CarDoor carDoor = new CarDoor(Material.STEEL, getPlace());
 
-    public void drive(Place targetPlace) {
+    public void drive(PlaceWithSomething targetPlace) {
         for (Person person: whoIsSitingHere){
             person.changePlace(targetPlace);
+            targetPlace.addThingsHere(this);
         }
     }
-    public ArrayList<Person> getWhoIsSitingHere() {
+    public ArrayList<Person> getWhoIsSitingHere()    {
         return whoIsSitingHere;
     }
 
@@ -43,12 +44,12 @@ public class Car extends InteractableThings {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Car car)) return false;
-        return Objects.equals(place, car.place) && Objects.equals(carDoor, car.carDoor);
+        return Objects.equals(getCarDoor(), car.getPlace()) && Objects.equals(carDoor, car.carDoor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(place, carDoor);
+        return Objects.hash(getPlace(), carDoor);
     }
 
     public CarDoor getCarDoor() {
@@ -58,9 +59,7 @@ public class Car extends InteractableThings {
     @Override
     public String toString() {
         return "Car{" +
-                "place=" + place +
-                ", carDoor=" + carDoor +
-                ", whoIsSitingHere=" + whoIsSitingHere +
-                "} " + super.toString();
+                "whoIsSitingHere=" + whoIsSitingHere +
+                '}';
     }
 }

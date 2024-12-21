@@ -9,8 +9,8 @@ import java.util.Objects;
 
 public class PlaceWitoutSomething extends Place {
 
-    public PlaceWitoutSomething(String name, Lighten lighten, Distance distance) {
-        super(name, lighten, distance);
+    public PlaceWitoutSomething(String name, Lighten lighten, Distance distance, Place previousPlace) {
+        super(name, lighten, distance, previousPlace);
     }
 
 }

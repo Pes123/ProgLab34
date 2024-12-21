@@ -6,7 +6,9 @@ import Aclasses.InteractableThings;
 import Aclasses.Place;
 import enums.Distance;
 import enums.Status;
+import exceptions.CannotDriveException;
 import exceptions.DoorIsntOpenException;
+import exceptions.NotLinkedPlacesException;
 import exceptions.ThereIsNoCarException;
 import records.DrivingLicense;
 
@@ -17,25 +19,39 @@ public class Person {
     final private String sex;
     private Place place;
     private DrivingLicense drivingLicense;
-    private Status status;
+    private Status status = Status.STANDING;
     private Keys  keys;
     public Person(String name, String sex, Place place){
         this.name = name;
         this.sex = sex;
         this.place = place;
     }
+
+
+
     void changePlace(Place targetPlace){
-        this.place.removePersonHere(this);
-        this.place = targetPlace;
-        this.place.addPersonHere(this);
+        if (targetPlace.getDistance().equals(Distance.CLOSE)){
+            this.place.removePersonHere(this);
+            this.place = targetPlace;
+            this.place.addPersonHere(this);
+            System.out.println(this.name + " переместился в " + this.place.getName());
+        }
+        else{
+            this.place.removePersonHere(this);
+            this.place = targetPlace;
+            this.place.addPersonHere(this);
+            System.out.println(this.name + " переместился в " + this.place.getName() + " на тачке блинб");
+        }
     }
     // так как у меня есть два класса места с объектами внутри и без объектов внутри
     // я проверяю к какому классу относится место в котором сейчас находится пчелик
     // и создаю объект этого места на основе исходного place ( спомощью приведения)
     // чтобы работать с нужными методами
-    public void MoveToTargetPlace(Place targetPlace) throws ThereIsNoCarException {
-        if (targetPlace.getDistance().equals(Distance.CLOSE)) {
+    public void moveToTargetPlace(Place targetPlace) throws ThereIsNoCarException, NotLinkedPlacesException {
+        if (targetPlace.getDistance().equals(Distance.CLOSE) && targetPlace.getPreviousPlace().equals(this.place)) {
             changeClosePlace(targetPlace);
+        } else if (targetPlace.getDistance().equals(Distance.CLOSE) && !(targetPlace.getPreviousPlace().equals(this.place))) {
+            throw new NotLinkedPlacesException("Нельзя пройти в несвязанные места блинб");
         }
         // это нужно чтобы среди всех обьектов находящихся в месте найти машину и передать
         // ее в следующую функцию
@@ -50,22 +66,24 @@ public class Person {
                     }
                 }
             }
-            if (car != null) {
+            if (car != null && getStatus().equals(Status.SITTING)) {
                 changeFarPlace(targetPlace, car);
+            } else if (getStatus().equals(Status.STANDING)) {
+                System.out.println("Сперва бы сесть в машину блинб");
             } else {
-                throw new ThereIsNoCarException("нет тут тачки блин");
+                throw new ThereIsNoCarException("нет тут тачки блинб");
             }
         }
     }
-    public void changeFarPlace(Place targetPlace,Car car){
+    private void changeFarPlace(Place targetPlace,Car car) throws CannotDriveException {
         if (drivingLicense != null){
-            car.drive(targetPlace);
+            car.drive((PlaceWithSomething) targetPlace);
         }
     }
 
 
 
-    private void changeClosePlace(Place targetPlace) {
+    private void changeClosePlace(Place targetPlace) throws DoorIsntOpenException {
         if (this.place instanceof PlaceWithSomething) {
             PlaceWithSomething tempPlace = (PlaceWithSomething) this.place;
             for (InteractableThings things : tempPlace.getThingsHere()) {
@@ -73,9 +91,9 @@ public class Person {
                     Door door = (Door) things;
                     if (door.getIsOpened()) {
                         changePlace(targetPlace);
-                        System.out.println(name + "Переместился в " + place.getName());
+
                     } else {
-                        throw new DoorIsntOpenException("Дверь закрыта блинб");
+                        throw new DoorIsntOpenException();
                     }
                 }
             }
@@ -85,6 +103,8 @@ public class Person {
         }
     }
 
+
+
     public void openDoor(StorageDoor door){
         door.open(this.getPlace().getLighten());
     }
@@ -93,9 +113,10 @@ public class Person {
         if (car.getCarDoor().getIsOpened()){
             setStatus(Status.SITTING);
             car.addSomeone(this);
+            System.out.println(getName() + " сел в тачку");
         }
         else {
-            throw new DoorIsntOpenException("Дверь не отварилась блинб");
+            throw new DoorIsntOpenException();
         }
     }
     public void openDoor(CarDoor door){
@@ -114,18 +135,6 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(name, sex, drivingLicense);
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", place=" + place +
-                ", drivingLicense=" + drivingLicense +
-                ", status=" + status +
-                ", keys=" + keys +
-                '}';
     }
 
     public String getName() {
@@ -166,5 +175,18 @@ public class Person {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", place=" + place +
+                ", drivingLicense=" + drivingLicense +
+                ", status=" + status +
+                ", keys=" + keys +
+                '}';
     }
 }
